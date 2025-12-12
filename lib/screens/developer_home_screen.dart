@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/theme.dart';
+import 'booking_detail_screen.dart';
+import 'booking_list_screen.dart';
 
 class DeveloperHomeScreen extends StatefulWidget {
   const DeveloperHomeScreen({Key? key}) : super(key: key);
@@ -274,10 +276,13 @@ class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
                                 SizedBox(width: 8),
                                 ElevatedButton(
                                   onPressed: () {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Proposal terkirim untuk: ${project['title']}',
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => BookingDetailScreen(
+                                          project: project,
+                                          role: 'developer',
+                                          userName: 'Developer User',
                                         ),
                                       ),
                                     );
@@ -416,23 +421,47 @@ class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
             // Logout
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  icon: Icon(Icons.logout),
-                  label: Text(
-                    'Logout',
-                    style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                BookingListScreen(role: 'developer'),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.history),
+                      label: Text('Riwayat Booking'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.accentColor,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
                   ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 12),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      icon: Icon(Icons.logout),
+                      label: Text(
+                        'Logout',
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
 

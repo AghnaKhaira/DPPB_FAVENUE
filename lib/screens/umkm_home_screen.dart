@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../utils/theme.dart';
+import 'booking_detail_screen.dart';
+import 'booking_list_screen.dart';
 
 class UMKMHomeScreen extends StatefulWidget {
   const UMKMHomeScreen({Key? key}) : super(key: key);
@@ -174,20 +176,44 @@ class _UMKMHomeScreenState extends State<UMKMHomeScreen> {
             // Logout Button
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/login');
-                  },
-                  icon: Icon(Icons.logout),
-                  label: Text('Logout'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 12),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                BookingListScreen(role: 'umkm'),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.history),
+                      label: Text('Riwayat Booking'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.accentColor,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/login');
+                      },
+                      icon: Icon(Icons.logout),
+                      label: Text('Logout'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 24),
@@ -198,71 +224,129 @@ class _UMKMHomeScreenState extends State<UMKMHomeScreen> {
   }
 
   Widget _buildDeveloperCard(Map<String, dynamic> dev) {
-    return Card(
-      margin: EdgeInsets.only(bottom: 12),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                CircleAvatar(
-                  backgroundColor: AppTheme.accentColor,
-                  child: Icon(Icons.code, color: Colors.white),
-                ),
-                SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BookingDetailScreen(
+              project: {
+                'id': dev['id'],
+                'title': dev['name'],
+                'budget': dev['price'],
+                'deadline': '30 hari',
+                'status': 'Available',
+                'description': '${dev['specialty']} dengan rating ${dev['rating']}',
+              },
+              role: 'umkm',
+              userName: 'UMKM User',
+            ),
+          ),
+        );
+      },
+      child: Card(
+        margin: EdgeInsets.only(bottom: 12),
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    backgroundColor: AppTheme.accentColor,
+                    child: Icon(Icons.code, color: Colors.white),
+                  ),
+                  SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          dev['name'],
+                          style: GoogleFonts.poppins(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          dev['specialty'],
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: Color(0xFF6B7280),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Column(
                     children: [
+                      Icon(Icons.star, color: Colors.amber, size: 16),
                       Text(
-                        dev['name'],
-                        style: GoogleFonts.poppins(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        dev['specialty'],
-                        style: GoogleFonts.poppins(
-                          fontSize: 12,
-                          color: Color(0xFF6B7280),
-                        ),
+                        dev['rating'].toString(),
+                        style: GoogleFonts.poppins(fontSize: 12),
                       ),
                     ],
                   ),
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.star, color: Colors.amber, size: 16),
-                    Text(
-                      dev['rating'].toString(),
-                      style: GoogleFonts.poppins(fontSize: 12),
+                ],
+              ),
+              SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '${dev['projects']} projects',
+                    style: GoogleFonts.poppins(fontSize: 12),
+                  ),
+                  Text(
+                    dev['price'],
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.accentColor,
                     ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${dev['projects']} projects',
-                  style: GoogleFonts.poppins(fontSize: 12),
-                ),
-                Text(
-                  dev['price'],
-                  style: GoogleFonts.poppins(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.accentColor,
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookingDetailScreen(
+                          project: {
+                            'id': dev['id'],
+                            'title': dev['name'],
+                            'budget': dev['price'],
+                            'deadline': '30 hari',
+                            'status': 'Available',
+                            'description': '${dev['specialty']} dengan rating ${dev['rating']}',
+                          },
+                          role: 'umkm',
+                          userName: 'UMKM User',
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppTheme.primaryColor,
+                    foregroundColor: Colors.black,
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                  ),
+                  child: Text(
+                    'Booking Sekarang',
+                    style: GoogleFonts.poppins(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+            ],
+          ),
         ),
       ),
     );
