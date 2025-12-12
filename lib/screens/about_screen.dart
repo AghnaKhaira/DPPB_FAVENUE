@@ -24,7 +24,7 @@ class AboutScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'Tentang Favenue',
+                    'Tentang FavenueKu',
                     style: GoogleFonts.poppins(
                       fontSize: 32,
                       fontWeight: FontWeight.bold,
