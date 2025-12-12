@@ -12,6 +12,9 @@ class UMKMHomeScreen extends StatefulWidget {
 }
 
 class _UMKMHomeScreenState extends State<UMKMHomeScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
   List<Map<String, dynamic>> availableDevelopers = [
     {
       'id': 1,
@@ -50,6 +53,26 @@ class _UMKMHomeScreenState extends State<UMKMHomeScreen> {
   ];
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Map<String, dynamic>> get filteredDevelopers {
+    if (_searchQuery.isEmpty) return availableDevelopers;
+    return availableDevelopers
+        .where((developer) => developer['name']
+            .toString()
+            .toLowerCase()
+            .contains(_searchQuery.toLowerCase()) ||
+        developer['specialty']
+            .toString()
+            .toLowerCase()
+            .contains(_searchQuery.toLowerCase()))
+        .toList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF9FAFB),
@@ -82,6 +105,44 @@ class _UMKMHomeScreenState extends State<UMKMHomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Search Bar
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: TextField(
+                controller: _searchController,
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'Cari developer...',
+                  prefixIcon: Icon(Icons.search, color: AppTheme.primaryColor),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _searchController.clear();
+                            setState(() {
+                              _searchQuery = '';
+                            });
+                          },
+                        )
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Color(0xFFE5E7EB)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Color(0xFFE5E7EB)),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+            ),
+
             // Welcome Card
             Container(
               margin: EdgeInsets.all(16),
@@ -134,9 +195,9 @@ class _UMKMHomeScreenState extends State<UMKMHomeScreen> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: availableDevelopers.length,
+                    itemCount: filteredDevelopers.length,
                     itemBuilder: (context, index) {
-                      final dev = availableDevelopers[index];
+                      final dev = filteredDevelopers[index];
                       return _buildDeveloperCard(dev);
                     },
                   ),

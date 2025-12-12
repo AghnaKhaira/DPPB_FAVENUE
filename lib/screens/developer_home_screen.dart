@@ -13,6 +13,9 @@ class DeveloperHomeScreen extends StatefulWidget {
 }
 
 class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
   List<Map<String, dynamic>> availableProjects = [
     {
       'id': 1,
@@ -51,6 +54,22 @@ class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
   ];
 
   @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  List<Map<String, dynamic>> get filteredProjects {
+    if (_searchQuery.isEmpty) return availableProjects;
+    return availableProjects
+        .where((project) => project['title']
+            .toString()
+            .toLowerCase()
+            .contains(_searchQuery.toLowerCase()))
+        .toList();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFFF9FAFB),
@@ -85,6 +104,44 @@ class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            // Search Bar
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: TextField(
+                controller: _searchController,
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value;
+                  });
+                },
+                decoration: InputDecoration(
+                  hintText: 'Cari proyek...',
+                  prefixIcon: Icon(Icons.search, color: AppTheme.secondaryColor),
+                  suffixIcon: _searchQuery.isNotEmpty
+                      ? IconButton(
+                          icon: Icon(Icons.clear),
+                          onPressed: () {
+                            _searchController.clear();
+                            setState(() {
+                              _searchQuery = '';
+                            });
+                          },
+                        )
+                      : null,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Color(0xFFE5E7EB)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Color(0xFFE5E7EB)),
+                  ),
+                  filled: true,
+                  fillColor: Colors.white,
+                ),
+              ),
+            ),
+
             // Welcome Card
             Container(
               margin: EdgeInsets.all(16),
@@ -167,9 +224,9 @@ class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
                   ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: availableProjects.length,
+                    itemCount: filteredProjects.length,
                     itemBuilder: (context, index) {
-                      final project = availableProjects[index];
+                      final project = filteredProjects[index];
                       return Container(
                         margin: EdgeInsets.only(bottom: 12),
                         padding: EdgeInsets.all(16),
