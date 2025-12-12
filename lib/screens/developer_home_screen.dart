@@ -17,7 +17,7 @@ class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
       'id': 1,
       'title': 'Website E-commerce',
       'description': 'Butuh developer untuk membuat website e-commerce dengan fitur pembayaran',
-      'budget': 'Rp 50.000.000 - Rp 100.000.000',
+      'budget': 'Rp 50.000.000 - Rp 100.000.0000',
       'deadline': '3 bulan',
       'status': 'Open'
     },

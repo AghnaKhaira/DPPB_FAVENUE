@@ -24,7 +24,7 @@ class _BookingListScreenState extends State<BookingListScreen> {
       'projectTitle': 'Website E-commerce',
       'clientName': 'PT. Maju Jaya',
       'developerName': 'Budi Santoso',
-      'budget': 'Rp 50.000.000',
+      'budget': 'Rp 50.000.0000',
       'status': 'accepted',
       'createdAt': '2024-12-01',
       'description': 'Website e-commerce dengan fitur pembayaran online',
