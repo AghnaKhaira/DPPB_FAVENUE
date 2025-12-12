@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../utils/theme.dart';
 import 'booking_detail_screen.dart';
 import 'booking_list_screen.dart';
+import 'portfolio_screen.dart';
 
 class DeveloperHomeScreen extends StatefulWidget {
   const DeveloperHomeScreen({Key? key}) : super(key: key);
@@ -312,6 +313,164 @@ class _DeveloperHomeScreenState extends State<DeveloperHomeScreen> {
                         ),
                       );
                     },
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 24),
+
+            // Portfolio Section
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Portfolio Saya',
+                        style: GoogleFonts.poppins(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => PortfolioScreen(),
+                            ),
+                          );
+                        },
+                        child: Text(
+                          'Lihat Semua',
+                          style: GoogleFonts.poppins(
+                            fontSize: 12,
+                            color: AppTheme.secondaryColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 12),
+                  Container(
+                    height: 200,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 3,
+                      itemBuilder: (context, index) {
+                        final portfolioItems = [
+                          {
+                            'title': 'E-Commerce Platform',
+                            'description': 'Platform e-commerce dengan pembayaran',
+                            'tech': 'Flutter, Firebase',
+                          },
+                          {
+                            'title': 'Task Management App',
+                            'description': 'Aplikasi manajemen tugas real-time',
+                            'tech': 'Flutter, Node.js',
+                          },
+                          {
+                            'title': 'Social Media App',
+                            'description': 'Aplikasi media sosial dengan messaging',
+                            'tech': 'Flutter, Firebase',
+                          },
+                        ];
+                        final item = portfolioItems[index];
+                        return Container(
+                          width: 200,
+                          margin: EdgeInsets.only(right: 12),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Color(0xFFE5E7EB)),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.05),
+                                blurRadius: 4,
+                                offset: Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.all(12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: 80,
+                                decoration: BoxDecoration(
+                                  color: AppTheme.secondaryColor.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Icon(
+                                  Icons.image_outlined,
+                                  color: AppTheme.secondaryColor.withOpacity(0.5),
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text(
+                                item['title']!,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              SizedBox(height: 4),
+                              Text(
+                                item['description']!,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 10,
+                                  color: Color(0xFF9CA3AF),
+                                ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              Spacer(),
+                              Text(
+                                item['tech']!,
+                                style: GoogleFonts.poppins(
+                                  fontSize: 9,
+                                  color: AppTheme.secondaryColor,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PortfolioScreen(),
+                          ),
+                        );
+                      },
+                      icon: Icon(Icons.add),
+                      label: Text(
+                        'Tambah Portfolio',
+                        style: GoogleFonts.poppins(fontWeight: FontWeight.w600),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppTheme.secondaryColor,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                    ),
                   ),
                 ],
               ),
