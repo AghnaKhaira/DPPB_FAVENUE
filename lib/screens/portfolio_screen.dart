@@ -74,7 +74,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
-                    Icons.portfolio_outlined,
+                    Icons.work_outline,
                     size: 64,
                     color: Color(0xFFD1D5DB),
                   ),
