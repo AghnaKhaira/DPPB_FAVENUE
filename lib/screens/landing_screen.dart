@@ -4,6 +4,7 @@ import '../utils/theme.dart';
 import 'about_screen.dart';
 import 'explore_screen.dart';
 import 'knowledge_screen.dart';
+import 'contact_us_screen.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({Key? key}) : super(key: key);
@@ -389,6 +390,17 @@ class _LandingScreenState extends State<LandingScreen> {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(context, MaterialPageRoute(builder: (context) => const KnowledgeScreen()));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.email),
+            title: Text(
+              'Contact Us',
+              style: GoogleFonts.poppins(),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const ContactUsScreen()));
             },
           ),
           Divider(),
