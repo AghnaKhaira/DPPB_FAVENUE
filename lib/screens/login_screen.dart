@@ -28,12 +28,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
     setState(() => _isLoading = true);
 
-    // Simulasi delay loading
+    
     await Future.delayed(Duration(seconds: 1));
 
     setState(() => _isLoading = false);
 
-    // Navigate ke role selection
+  
     Navigator.pushReplacementNamed(context, '/role-selection');
   }
 
