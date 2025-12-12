@@ -44,12 +44,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     setState(() => _isLoading = true);
 
-    // Simulasi delay loading
+    
     await Future.delayed(Duration(seconds: 1));
 
     setState(() => _isLoading = false);
 
-    // Navigate ke role selection
+    
     Navigator.pushReplacementNamed(context, '/role-selection');
   }
 
