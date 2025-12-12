@@ -11,8 +11,6 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  String _selectedCategory = 'all';
-
   final List<Map<String, String>> features = [
     {
       'title': 'Jelajahi Developer',
